@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="main-page-header">
+  <div class="container">
+    <div id="register-page">
+      
+      
+      
+      {% if searched_draft %}
+        <div class="draft-page">
+        <h1>Drafts</h1>
+        <div class="search-table">
+          <h3>Draft List</h3>
+
+          <div class="search">
+            <form method="POST">
+              {% csrf_token %}
+              <input type="text" placeholder="Search" name="searched-draft">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+
+        </div>
+        <div class="draft-table">
+          <table id="draft-table">
+            <tr>
+              <th>Title</th>
+              <th>Photo</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          
+          {% for recipe in draft_recipes %}
+          <tr>
+            <td>{{ recipe.title }}</td>
+            <td class="img-draft"><img src="{{ recipe.photo.url }}"></td>
+            <td>{{recipe.category}}</td>
+            <td>{{recipe.status}}</td>
+            <td><a href="{% url 'blog:edit-draft' recipe.slug %}"><i class="far fa-edit"></i></a></td>
+            <td><a href="{% url 'blog:delete-draft' recipe.slug %}"><i class="far fa-trash-alt"></i></a></td>
+          </tr>
+          {% endfor %}
+
+          
+          {% if searched_draft %}
+            {% for recipe in searched_draft %}
+            <tr>
+              <td>{{ recipe.title }}</td>
+              <td class="img-draft"><img src="{{ recipe.photo.url }}"></td>
+              <td>{{recipe.category}}</td>
+              <td>{{recipe.status}}</td>
+              <td><a href="{% url 'blog:edit-draft' recipe.slug %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'blog:delete-draft' recipe.slug %}"><i class="far fa-trash-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+            
+            
+
+          </table>
+        </div>
+      </div>
+      {% endif %}
+        
+      
+
+        
+      
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  

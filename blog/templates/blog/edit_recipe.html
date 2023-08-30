@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+  main
+{% endblock title %}
+
+
+
+{% block content %}
+<!-- MAIN PAGE -->
+<div class="main-page-header">
+  <div class="container">
+    <div id="editprofile-page">
+
+      
+      <!-- Register -->
+        <div id="editprofile-form">
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Update Recipe</h1>
+
+            <!-- {{ edit_recipe_form }} -->
+            <label for="">Title</label>
+            {{ edit_recipe_form.title }}
+            <br>
+            <br>
+            <label for="">Photo</label>
+            {{ edit_recipe_form.photo }}
+            <br>
+            <br>
+            <label for="">Cooking Time</label>
+            {{ edit_recipe_form.cooking_time }}
+            <br>
+            <br>
+            <label for="">Description</label>
+            {{ edit_recipe_form.description }}
+            <br>
+            <br>
+            <label for="">Content</label>
+            <br>
+            <br>
+            {{ edit_recipe_form.content | safe }}
+            {{ edit_recipe_form.media }}
+            <br>
+            <br>
+            <label for="">Category</label>
+            <br>
+            <br>
+            {{ edit_recipe_form.category|add_class:"custom-select" }}
+            <br>
+            <br>
+            <label for="">Status</label>
+            <br>
+            <br>
+            {{ edit_recipe_form.status|add_class:"custom-select" }}
+            <br>
+            <br>
+            <label for="">Featured</label>
+            {{ edit_recipe_form.featured|add_class:"featured-radio-btn" }}
+
+            <div class="inputs2">
+              <button type="submit">Update</button>
+            </div>
+            
+          </form>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  

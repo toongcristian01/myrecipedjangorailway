@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <!-- MAIN CONTENT -->
+  <section id="recipes-section">
+    <div class="container">
+      <section id="recipes">
+       
+        <h1>Categories</h1>
+
+          <!-- breakfast, lunch, dinner... -->
+          <h3>{{category | title}} Recipes</h3>
+          <br>
+          <br>
+
+          <div class="recipe-cards"'>
+              {% for recipe in category_recipes %}
+              <div class="recipe-card">
+                <div class="recipe-img">
+                  <img src="{{ recipe.photo.url }}" alt="">
+                </div>
+                
+                <div class="description">
+                  <div class="time">
+                    <div class="clock">
+                      <i class="far fa-clock clock"></i>{{ recipe.cooking_time }}
+                    </div>
+                    <!-- <div><a href="#">Like</a></div> -->
+                    {% if recipe.average_review %}
+                    <div class="rating-star">
+                      <span>
+                        <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+      
+                      </span>
+                    </div>
+                    {% else %}
+                    <div class="rating-star">
+                      <span>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+      
+      
+                      </span>
+                    </div>
+                    {% endif %}
+                  </div>
+                  
+                  <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+                
+                <p>{{ recipe.description | truncatechars:100  }}</p>
+      
+                <div class="user">
+                  
+                  <a href="{% url 'accounts:profile-detail-view' recipe.author.slug %}">
+                    <div class="user-img">
+                      <img src="{{ recipe.author.avatar.url }}" alt="">
+                    </div>
+                  </a>
+                  
+                  <div class="user-info">
+                    <h3>{{ recipe.author.user }}</h3>
+                    <p class="date">April 30, 2021</p>
+                  </div>
+                </div>
+                </div>
+            </div>
+
+            {% endfor %}
+          </div>
+
+
+          
+
+      </section>
+    </div>
+  </section>
+    
+{% endblock content %}
+  

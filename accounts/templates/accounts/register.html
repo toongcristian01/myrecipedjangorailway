@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  register
+{% endblock title %}
+  
+
+{% block content %}
+<div class="main-page-header">
+  <div class="container">
+    <div id="register-page">
+      
+      
+      <!-- Register -->
+        <div id="register-form">
+            
+            {% if messages %}
+            
+              {% for message in messages %}
+              <div style="color: tomato;">{{ message }}</div>
+              {% endfor %}
+
+            {% endif %}
+              
+          
+          <form action="" method="POST" id="register-main-form">
+            {% csrf_token %}
+            <h1>Create an account</h1>
+
+            <div class="inputs1">
+              <div class="left">
+
+                <label for="firstname">First Name</label>
+                <input type="text" name="firstname" placeholder="First Name*" id="firstname">
+                <div id="error"></div>
+
+
+                <label for="lastname">Last Name</label>
+                <input type="text" name="lastname" placeholder="Last Name*" id="lastname">
+                <div id="error"></div>
+
+
+
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="User Name*" id="username">
+                <div id="error"></div>
+
+
+
+              </div>
+              
+              <div class="right">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Email*" id="email">
+                <div id="error"></div>
+
+                  
+
+                
+                <label for="password1">Password</label>
+                <input type="password" name="password1" placeholder="Password*" id="password1">
+                <div id="error"></div>
+
+
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" placeholder="Password*" id="password2">
+                <div id="error"></div>
+
+
+              </div>
+            </div>
+            
+
+            <div class="inputs2"></div>
+              <button type="submit">Register</button>
+            </div>
+            
+          </form>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  

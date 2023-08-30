@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+
+{% block title %}
+  main
+{% endblock title %}
+
+
+{% block content %}
+  <!-- MAIN CONTENT -->
+
+  <!-- PROFILE -->
+  <div class="container" id="profile">
+      
+    <h1 class="profile-heading">Profile</h1>
+    <div id="profile-section">
+      <div class="about-me">
+        <h3>About Me</h3>
+        <div class="profile-img">
+
+
+          <img src="{{ profile.avatar.url }}" alt="">
+
+            
+          
+        </div>
+        <div class="profile-name">
+          <p>{{ profile.first_name|title }} {{ profile.last_name|title }}</p>
+        </div>
+        <div class="website">
+          <a href="{{ profile.website }}" target="_blank"><p>{{ profile.website }}</p></a>
+        </div>
+        <div class="location">
+          <p>{{ profile.location }}</p>
+        </div>
+        <div class="description">
+          <p>{{ profile.bio}}</p>
+        </div>
+        <div class="socials">
+          <a href="{{ profile.facebook }}" target="_blank">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="{{ profile.twitter }}" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="{{ profile.instagram }}" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="{{ profile.pinterest }}" target="_blank">
+            <i class="fab fa-pinterest"></i>
+          </a>
+        </a>
+        </div>
+
+        <!-- <div class="following">
+          <a href="#">followers</a>
+          <a href="#">following</a>
+        </div> -->
+      </div>
+
+      <div class="profile-info">
+        <div class="recipe-count">
+          <h3>Recipes</h3>
+            {% if profile.user == request.user %}
+            <p>{{ recipe_count }}</p>
+            {% else %}
+            <p>{{ recipe_count }}</p>
+            {% endif %}
+        </div>
+        <div class="like-count">
+          <h3>Reviews</h3>
+          <p>{{ user_reviews_count }}</p>
+        </div>
+        <div class="ratings-count">
+          <h3>Rating</h3>
+          <p>{{ get_avg_review|floatformat:"2" }}%</p>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+
+    
+    <!-- RECIPES -->
+    <section id="recipes-section">
+      <div class="container">
+        <section id="recipes">
+          <h1>Recipes</h1>
+      
+          <div class="recipe-cards">
+            {% if profile.user == request.user and profile_recipe %}
+              {% for recipe in profile_recipe %}
+              <!-- recipe card -->
+              <div class="recipe-card">
+                <div class="recipe-img">
+                  <img src="{{ recipe.photo.url }}" alt="">
+                </div>
+                
+                <div class="description">
+                  <div class="time">
+                    <p>{{ recipe.cooking_time }}</p><a href="#">Like</a>
+                    
+  
+                  </div>
+                  
+                  <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+                
+                <p>{{ recipe.description }}</p>
+        
+                  <small style="color: #7A7A7E;">{{ recipe.created }}</small>
+                </div>
+              </div>
+              <!-- end recipe card -->
+              {% endfor %}
+            {% else %}
+              {% for recipe in recipe_published %}
+              <!-- recipe card -->
+              <div class="recipe-card">
+                <div class="recipe-img">
+                  <img src="{{ recipe.photo.url }}" alt="">
+                </div>
+                
+                <div class="description">
+                  <div class="time">
+                    <div class="clock">
+                      <i class="far fa-clock clock"></i>{{ recipe.cooking_time }}
+                    </div>
+                    <!-- <a href="#">Like</a> -->
+                    {% if recipe.average_review %}
+                    <div class="rating-star">
+                      <span>
+                        <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                        <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+  
+                      </span>
+                    </div>
+                    {% else %}
+                    <div class="rating-star">
+                      <span>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                      </span>
+                    </div>
+                    {% endif %}
+                  </div>
+                  
+                  <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+                
+                <p>{{ recipe.description | truncatechars:50 }}</p>
+        
+                  <small style="color: #7A7A7E;">{{ recipe.created }}</small>
+                </div>
+              </div>
+              <!-- end recipe card -->
+              {% endfor %}
+              
+            {% endif %}
+            
+           
+    
+          </div>
+        </section>
+      </div>
+  
+    
+    </section>
+    
+
+{% endblock content %}
+  

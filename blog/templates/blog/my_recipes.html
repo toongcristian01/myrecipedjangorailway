@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+  my recipes
+{% endblock title %}
+
+
+{% block content %}
+    <!-- MAIN CONTENT -->
+    <section id="recipes-section">
+      <div class="container">
+        <section id="recipes">
+          <h1>My Recipes</h1>
+      
+          <div class="recipe-cards">
+    
+       {% if myrecipes %}
+       {% for recipe in myrecipes %}
+       <!-- recipe card -->
+        <div class="recipe-card">
+          
+          
+          {% if recipe.status == 'published' %}
+            <div class="status">
+              <h3>Published</h3>
+            </div>
+          {% else %}
+          <div class="status">
+            <h3>Draft</h3>
+          </div>
+          {% endif %}
+            
+          
+          <div class="recipe-img">
+            <img src="{{ recipe.photo.url }}" alt="">
+          </div>
+          
+          <div class="description">
+            <div class="time">
+              <div class="clock">
+                <i class="far fa-clock clock"></i>{{ recipe.cooking_time }}
+              </div>
+              <!-- <a href="#">Like</a> -->
+              {% if recipe.average_review %}
+                <div class="rating-star">
+                  <span>
+                    <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+  
+                  </span>
+                </div>
+                {% else %}
+                <div class="rating-star">
+                  <span>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+  
+  
+                  </span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+          
+          <p>{{ recipe.description | truncatechars:100  }}</p>
+  
+          <small style="color: #7A7A7E;">{{ recipe.created }}</small>
+          </div>
+        </div>
+        <!-- end recipe card -->
+        {% endfor %}
+        {% else %}
+        <div class="container">
+          <div style="padding: 3rem 0; min-height: 60vh;">
+            <h2>No recipe yet</h2>
+            <!-- <a href="{% url 'blog:create-recipe' %}"><h3>Create recipe</h3> </a> -->
+          </div>
+  
+        </div>
+        
+       {% endif %}
+              
+           
+    
+          </div>
+        </section>
+      </div>
+    </section>
+    
+    
+{% endblock content %}
+  

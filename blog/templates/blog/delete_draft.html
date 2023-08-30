@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+  <div class="main-page-header">
+  <div class="container">
+    <div id="register-page">
+      
+      
+      <!-- Register -->
+        <div id="register-form">
+            
+            {% if messages %}
+            
+              {% for message in messages %}
+              <div style="color: tomato;">{{ message }}</div>
+              {% endfor %}
+
+            {% endif %}
+              
+          
+          <form action="{% url 'blog:delete-draft' recipe.slug %}" method="POST" id="register-main-form">
+            {% csrf_token %}
+            <h1>Delete Recipe</h1>
+
+            <p>Are you sure you want to delete "{{ recipe }}"?</p>
+            <br>
+            <br>
+            <div class="inputs2">
+              <button type="submit" style="background: tomato;">Confirm Delete</button>
+              <a class="cancel-btn" href="{% url 'blog:draft-view' %}">
+                Cancel
+              </a>
+            </div>
+            
+          </form>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  

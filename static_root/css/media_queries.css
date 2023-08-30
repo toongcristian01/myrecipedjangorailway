@@ -1,0 +1,178 @@
+@media screen and (max-width: 960px) {
+  .contact {
+    min-height: 80vh;
+  }
+  .navbar-mobile {
+    transform: translateX(-100%);
+  }
+}
+
+
+@media screen and (max-width: 720px) {
+  .mobile-menu {
+    display: block!important;
+  }
+  .search-nav{
+    display: none!important;
+  }
+  #nav{
+    display: none!important;
+  }
+  .container {
+    width: 100%!important;
+  }
+  #main-page {
+    flex-direction: column;
+    width: 100%;
+  }
+  #main-page .left {
+    width: 100%!important;
+    order: 2;
+  }
+  #main-page .right {
+    width: 100%!important;
+    order: 1;
+    margin-bottom: 2rem;
+  }
+
+  #recipes .recipe-cards .recipe-card {
+    width: 100%!important;
+  }
+
+  #editprofile-form  {
+    width: 100%!important;
+  }
+
+  .recipe-detail-card .recipe-detail-user {
+    
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .recipe-detail-card .recipe-detail-img {
+    width: 100%!important;
+    height: 350px!important;
+  }
+
+  #profile-section{
+    flex-direction: column;
+  }
+  #profile-section .about-me {
+    width: 100%!important;
+    margin-bottom: 2rem;
+  }
+
+  #profile-section .about-me .profile-img {
+    width: 150px!important;
+    height: 150px!important;
+  }
+
+  #profile-section .profile-info {
+    width: 100%!important;
+    height: 180px!important;
+  }
+
+  #profile-section .profile-info .recipe-count,
+  #profile-section .profile-info .like-count,
+  #profile-section .profile-info .ratings-count {
+    height: 180px!important;
+    width: 150px!important;
+  }
+
+
+
+  #profile-section .profile-info .recipe-count p,
+  #profile-section .profile-info .like-count p,
+  #profile-section .profile-info .ratings-count p {
+    font-size: 1.5rem!important;
+  }
+
+  .draft-page {
+    width: 100%;
+  }
+
+  .draft-table {
+    overflow-x: auto;
+  }
+
+  #register-form form .inputs2 button {
+    width: 130px!important;
+    
+  }
+
+  #register-form form .inputs2 a {
+    padding: 1rem 1.5rem;
+  }
+
+
+}
+
+@media screen and (max-width: 580px) {
+  #profile-section .profile-info .recipe-count,
+  #profile-section .profile-info .like-count,
+  #profile-section .profile-info .ratings-count {
+    height: 180px!important;
+    width: 120px!important;
+  }
+
+  #profile-section .profile-info .recipe-count p,
+  #profile-section .profile-info .like-count p,
+  #profile-section .profile-info .ratings-count p {
+    font-size: 1.2rem!important;
+  }
+
+  .search-table{
+    flex-direction: column;
+  }
+  .search-table h3 {
+    margin-bottom: 1rem;
+    order: 2;
+  }
+  .search-table .search{
+    padding: 0!important;
+    order: 1;
+  }
+
+  footer {
+    flex-direction: column;
+    width: 100%!important;
+    text-align: center;
+  }
+  footer .left,
+  footer .center {
+    margin-bottom: 1rem;
+  }
+
+  #register-form form .inputs2 {
+    flex-direction: column;
+  }
+
+  #register-form form .inputs2 button {
+    width: 100%!important;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    
+  }
+
+  #register-form form .inputs2 a {
+    width: 100%!important;
+    padding: 0.5rem 4rem;
+  }
+
+}
+
+
+@media screen and (max-width: 480px) {
+  .contact {
+    min-height: 60vh;
+    padding-bottom: 40px;
+  }
+
+  #profile-section .profile-info .recipe-count,
+  #profile-section .profile-info .like-count,
+  #profile-section .profile-info .ratings-count {
+    height: 180px!important;
+    width: 100px!important;
+  }
+}

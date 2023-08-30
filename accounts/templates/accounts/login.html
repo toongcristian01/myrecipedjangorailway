@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  MyRecipe | login
+{% endblock title %}
+  
+
+{% block content %}
+  <!-- MAIN PAGE -->
+  <div class="main-page-header">
+    <div class="container">
+      <div id="main-page">
+  
+        <div class="left">
+          
+          {% for recipe in recipe_featured %}
+            {% if recipe_featured %}
+            <!-- Featured -->
+          <div id="featured" class="slider fade">
+            <h1>Featured</h1>
+            <div class="recipe-img">
+              <img src="{{ recipe.photo.url }}" alt="">
+            </div>
+            
+            <div class="description">
+              <div class="time">
+                <div class="clock">
+                  <i class="far fa-clock clock"></i>{{ recipe.cooking_time }}
+                </div>
+                <!-- <div>
+                  <a href="#"class="like">Like</a>
+                </div> -->
+                
+                {% if recipe.average_review %}
+                <div class="rating-star">
+                  <span>
+                    <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                   <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                   <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+ 
+                 </span>
+               </div>
+             {% else %}
+               <div class="rating-star">
+                 <span>
+                   <i class="fa fa-star-o"></i>
+                   <i class="fa fa-star-o"></i>
+                   <i class="fa fa-star-o"></i>
+                   <i class="fa fa-star-o"></i>
+                   <i class="fa fa-star-o"></i>
+                 </span>
+               </div>
+             {% endif %}
+             </div>
+             <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+           
+             <p>{{ recipe.description|truncatechars:"50" }}</p>
+   
+             <div class="user">
+               
+               <a href="{% url 'accounts:profile-detail-view' recipe.author.slug %}">
+                 <div class="user-img">
+                   <img src="{{ recipe.author.avatar.url }}" alt="">
+                 </div>
+               </a>
+               
+               <div class="user-info">
+                 <h3>{{ recipe.author.user }}</h3>
+                 <p class="date">{{ recipe.created | timesince }}</p>
+               </div>
+             </div>
+           </div>
+   
+         </div>
+       
+          {% else %}
+            <h1>No Data</h1>
+          {% endif %}
+        {% endfor %}
+            
+          
+
+        </div>
+        <!-- end left -->
+       
+        
+        <!-- Login -->
+        <div class="right" id="login">
+          <div id="login-form">
+            {% if messages %}
+            
+            {% for message in messages %}
+            <div style="color: tomato;">{{ message }}</div>
+            {% endfor %}
+
+          {% endif %}
+            
+            <form method="POST">
+
+              {% csrf_token %}
+              <h1>Login</h1>
+              
+              <div class="inputs1">
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="User Name*" id="username">
+                <label for="password">Password</label>
+
+                <div class="input-box">
+                  <input type="password" name="password" placeholder="Password*" id="password" class="password-toggle">
+                  <div class='toggle-eye-crossed'></div>
+                </div>
+                
+              </div>
+  
+              <div class="inputs2">
+                <button type="submit">Login</button>
+                <a href="{% url 'reset_password' %}" class="forgot">Forgot Password?</a>
+              </div>
+
+            </form>
+          </div>
+          <div class="underline"></div>
+          <a href="{% url 'accounts:register' %}" class="register">Create New Account</a>
+        </div>
+        <!-- end right -->
+  
+      </div>
+       <!-- End Main Page  -->
+
+    </div>
+  </div>
+
+  <section id="recipes-section">
+    <div class="container">
+      <section id="recipes">
+        <h1>Recipes</h1>
+    
+        <div class="recipe-cards"'>
+          
+          
+          {% if recipes %}
+            {% for recipe in recipe_published %}
+            <!-- recipe card -->
+            <div class="recipe-card">
+              <div class="recipe-img">
+                <img src="{{ recipe.photo.url }}" alt="">
+              </div>
+              
+              <div class="description">
+                <div class="time">
+                  <div class="clock">
+                    <i class="far fa-clock clock" style="color: #001433;"></i>
+                     <span style="color: #787878;">{{ recipe.cooking_time }}</span>
+                  </div>
+                  <!-- <div><a href="#">Like</a></div> -->
+                  {% if recipe.average_review %}
+                  <div class="rating-star">
+                    <span>
+                      <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                      <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                      <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                      <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                      <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+    
+                    </span>
+                  </div>
+                  {% else %}
+                  <div class="rating-star">
+                    <span>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+    
+    
+                    </span>
+                  </div>
+                  {% endif %}
+                </div>
+                
+                <a href="{% url 'blog:recipe-detail' recipe.slug %}"><h2>{{ recipe.title }}</h2></a>
+              
+              <p style="margin-bottom: 2rem;">{{ recipe.description | truncatechars:50  }}</p>
+    
+              <div class="user">
+                
+                <a href="{% url 'accounts:profile-detail-view' recipe.author.slug %}">
+                  <div class="user-img">
+                    <img src="{{ recipe.author.avatar.url }}" alt="">
+                  </div>
+                </a>
+                
+                <div class="user-info">
+                  <h3>{{ recipe.author.user }}</h3>
+                  <p class="date">April 30, 2021</p>
+                </div>
+              </div>
+              </div>
+          </div>
+          <!-- end recipe card -->
+          {% endfor %}
+          {% else %}
+          <h1>No Data</h1>
+          {% endif %}
+            
+          
+            
+          
+    
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    
+  </script>
+  
+{% endblock content %}
+  

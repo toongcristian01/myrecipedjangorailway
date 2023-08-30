@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+  all recipes
+{% endblock title %}
+
+
+{% block content %}
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <section id="recipe-detail">
+    
+        <div class="recipe-detail-cards">
+          
+          <div class="recipe-detail-card">
+            <h1 class="recipe-title">{{ recipe.title | title }}</h1>
+
+            <div class="recipe-detail-user">
+              <div class="info">
+
+                <a href="{% url 'accounts:profile-detail-view' recipe.author.slug %}">
+                <div class="user-img">
+                  <img src="{{ profile_image }}" alt="">
+                </div>
+                </a>
+
+                <div class="user-info">
+                  <h1>{{profile_name}}</h1>
+                  <small>{{ recipe.created }}</small>
+                </div>
+              </div>
+
+              <!-- if user logged in and post author == current user -->
+              {% if user.is_authenticated and recipe.author.user == request.user %}
+                <div class="action-btns">
+                <a href="{% url 'blog:edit-recipe' recipe.slug %}">Edit Recipe</a>
+                <a href="{% url 'blog:delete-recipe' recipe.slug %}">Delete Recipe</a>
+              </div>
+              {% endif %}
+
+
+            </div>
+
+            <div class="recipe-detail-img">
+              <img src="{{ recipe.photo.url }}" alt="">
+            </div>
+
+            <div class="recipe-detail-under">
+              <div class="cooking-time">
+                <i class="far fa-clock"></i>
+                <h4>{{recipe.cooking_time}}</h4>
+                
+              </div>
+              <!-- <div class="like">
+                <a href="#"><i class="far fa-thumbs-up"></i></a><h3>Like</h3>
+              </div> -->
+   
+
+                <!-- <h1 style="font-family: 'Lato">{{recipe.average_review}}</h1> -->
+
+                
+                {% if recipe.average_review %}
+                <div class="rating-star">
+                  <span style="margin-right: 0.5rem; font-size: 1.1rem; color: tomato;">{{ recipe.average_review }}</span>
+                  <span style="margin-right: 0.5rem;">
+                    <i class="fa fa-star{% if recipe.average_review < 0.5 %}-o{% elif recipe.average_review >= 0.5 and recipe.average_review < 1 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 1.5 %}-o{% elif recipe.average_review >= 1.5 and recipe.average_review < 2 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 2.5 %}-o{% elif recipe.average_review >= 2.5 and recipe.average_review < 3 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 3.5 %}-o{% elif recipe.average_review >= 3.5 and recipe.average_review < 4 %}-half-alt {% endif %}"></i>
+                    <i class="fa fa-star{% if recipe.average_review < 4.5 %}-o{% elif recipe.average_review >= 4.5 and recipe.average_review < 5 %}-half-alt {% endif %}"></i>
+
+                  </span>
+                  <span style="color: #787878;">({{ recipe.count_review }})</span>
+                  
+                </div>
+                {% else %}
+                  <div class="rating-star">
+                    <span style="margin-right: 0.5rem;">
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </span>
+                  </div>
+                  <span>(0)</span>
+                {% endif %}
+                
+                
+
+            </div>
+
+            <div class="recipe-detail-desc">
+              <p>{{ recipe.description }}</p>
+            </div>
+
+            <div class="recipe-detail-content">
+              <p>{{ recipe.content | safe }}</p>
+            </div>
+
+          </div>
+  
+        </div>
+
+        <br>
+        <br>
+        
+
+        <!-- REVIEWS -->
+       
+          <div class="reviews">
+            
+            {% if user.is_authenticated %}
+              
+              {% if recipe.author.user == request.user %}
+                <h3>You can't submit review on your own recipe</h3>
+              {% elif recipe_user == request.user %}
+                <h3>You already submitted a review in this recipe.</h3>
+              {% else %}
+                
+                <div class="review-form">
+                  <h3>Leave a review</h3>
+                  <br>
+                  <form class="rate-form" method="POST" action="">
+                    {% csrf_token %}
+                    <label for=""></label>
+                    <!-- {{rate_form.rate}} -->
+                      
+                    <!-- rating star -->
+                    <div class="rate">
+                      <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5"></label>
+                      <input type="radio" name="rating" id="rating9" value="4.5" required><label for="rating9" title="4.5" class="half"></label>
+                      <input type="radio" name="rating" id="rating8" value="4" required><label for="rating8" title="4"></label>
+                      <input type="radio" name="rating" id="rating7" value="3.5" required><label for="rating7" title="3.5" class="half"></label>
+                      <input type="radio" name="rating" id="rating6" value="3" required><label for="rating6" title="3"></label>
+                      <input type="radio" name="rating" id="rating5" value="2.5" required><label for="rating5" title="2.5" class="half"></label>
+                      <input type="radio" name="rating" id="rating4" value="2" required><label for="rating4" title="2"></label>
+                      <input type="radio" name="rating" id="rating3" value="1.5" required><label for="rating3" title="1.5" class="half"></label>
+                      <input type="radio" name="rating" id="rating2" value="1" required><label for="rating2" title="1"></label>
+                      <input type="radio" name="rating" id="rating1" value="0.5" required><label for="rating1" title="0.5" class="half"></label>
+                    </div>
+                    
+
+                    <br>
+                    <br>
+                    <!-- {{rate_form.content}} -->
+                    <textarea name="content" rows="4" class="review-content-field"></textarea>
+                    <br>
+                    <br>
+                    <button type="submit" class="review-submit">Submit Review</button>
+                  </form>
+                </div>
+              {% endif %}
+              
+                
+          </div>
+        {% else %}
+          <a href="{% url 'accounts:login-view' %}" class="">Login to Review</a>
+
+          
+        {% endif %}
+
+       
+        
+        <!-- DISPLAY REVIEWS -->
+        <h1>Reviews:</h1> 
+        <span>{{ recipe.count_review }} Reviews</span>
+        {% for review in recipe.get_reviews %}
+          <div class="user-reviews">
+            <div class="left">
+
+              <!-- recipe.author.slug -->
+
+              <a href="{% url 'accounts:profile-detail-view' review.user.profile.slug %}">
+              <div class="user-img">
+                 <img src="{{ review.user.profile.avatar.url }}" alt="">
+              </div>
+              </a>
+              
+            </div>
+
+            <div class="right">
+              <div class="user-name">
+                <p>{{ review.user.username }}</p>
+                
+              </div>
+
+              <div class="rating">
+                <div class="rate">
+                  <!-- <p>Rating: <span style="font-weight: 600;">{{review.rate}}</span></p> -->
+                  <div class="rating-star">
+                    <span>
+                      <i class="fa fa-star{% if review.rate == 0.5 %}-half-alt{% elif review.rate < 1 %}-o {% endif %}"></i>
+                      <i class="fa fa-star{% if review.rate == 1.5 %}-half-alt{% elif review.rate < 2 %}-o {% endif %}"></i>
+                      <i class="fa fa-star{% if review.rate == 2.5 %}-half-alt{% elif review.rate < 3 %}-o {% endif %}"></i>
+                      <i class="fa fa-star{% if review.rate == 3.5 %}-half-alt{% elif review.rate < 4 %}-o {% endif %}"></i>
+                      <i class="fa fa-star{% if review.rate == 4.5 %}-half-alt{% elif review.rate < 5 %}-o {% endif %}"></i>
+                    </span>
+                  </div>
+                </div>
+                <div><small style="color: #7A7A7E;">{{ review.timestamp|timesince }} ago</small></div>
+              </div>
+
+              <div class="content">
+                <p>{{ review.content }}</p>
+              </div>
+            </div>
+          </div>     
+        {% endfor %}
+          
+     
+
+        
+      </section>
+    </div>
+    
+{% endblock content %}
+  

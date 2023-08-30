@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+  create recipe
+{% endblock title %}
+
+
+
+
+
+{% block content %}
+<!-- MAIN PAGE -->
+<div class="main-page-header">
+  <div class="container">
+    <div id="editprofile-page">
+
+      
+      <!-- Create Recipe -->
+        <div id="editprofile-form">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h1>Create Recipe</h1>
+
+            <label for="">Title</label>
+            {{ create_recipe_form.title }}
+
+            <label for="">Image</label>
+            {{ create_recipe_form.photo }}
+
+            <label for="">Cooking Time</label>
+            {{ create_recipe_form.cooking_time }}
+
+            <label for="">Description</label>
+            {{ create_recipe_form.description }}
+            
+            <label for="">Body</label>
+            <br>
+            <br>
+            {{ create_recipe_form.content | safe }}
+            {{ create_recipe_form.media }}
+            <br>
+            <br>
+
+            <label for="">Category</label>
+            <br>
+            <br>
+            {{ create_recipe_form.category|add_class:"custom-select"}}
+            <br>
+            <br>
+            <label for="">Status</label>
+            <br>
+            <br>
+            {{ create_recipe_form.status|add_class:"custom-select" }}
+            <br>
+            <br>
+            <label for="">Featured</label>
+            {{ create_recipe_form.featured|add_class:"featured-radio-btn" }}
+
+            <div class="inputs2">
+              <button type="submit">Create</button>
+            </div>
+            
+          </form>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  

@@ -1,0 +1,137 @@
+  <!-- NAV -->
+{% load static %}
+  <header>
+    <div class="nav-full-width">
+      <div class="container">
+        <div id="nav1">
+          <div class="logo">
+            <a href="{% url 'blog:main-view' %}" style="color: #fff;">MyRecipe</a>
+          </div>
+  
+          <div class="right search-nav">
+            <form action="{% url 'blog:search-recipes' %}" method="POST">
+              {% csrf_token %}
+              <input type="text" placeholder="Search Recipes" name="searched">
+              <button type="submit" class="search-btn">Search</button>
+            </form>
+          </div>
+
+          <div class="mobile-menu">
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+
+        </div>
+     
+      </div>
+    </div>
+   
+  
+  <div class="nav-full-width-2"> 
+    <div class="container">
+      <div id="nav">
+        <ul class="main-nav">
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'blog:main-view' %}">Home</a></li>
+            <li><a href="{% url 'blog:myrecipes-view' %}">My Recipes</a></li>
+            <li><a href="{% url 'blog:create-recipe' %}">Create Recipe</a></li>
+            <li><a href="{% url 'blog:draft-view' %}">Drafts</a></li>
+            <li class="categories-btn1"><a href="#">Categories</a></li>
+            <!-- <li><a href="#">About</a></li> -->
+          {% else %}
+            <li><a href="{% url 'accounts:login-view' %}">Home</a></li>
+            <li><a class="categories-btn1" href="#">Categories</a></li>  
+            <!-- <li><a href="{% url 'blog:about-view' %}">About</a></li> -->
+          {% endif %}
+          
+
+         
+        </ul>
+    
+        <ul class="socials">
+
+          {% if user.is_authenticated %}
+
+            <li>Logged in as: <a href="#" style="color: tomato; font-size: 13px;">{{ request.user.username }}</a></li>
+            <li><a href="{% url 'accounts:profile-detail-view' request.user.profile.slug %}">Profile</a></li>
+            <li><a href="{% url 'accounts:edit-profile' %}">Edit Profile</a></li>
+            <li><a href="{% url 'accounts:logout-view' %}">Logout</a></li>
+          {% else %}
+            <li><a href="#">
+              <i class="fab fa-instagram navbar-social"></i>
+            </a></li>
+            <li><a href="#">
+              <i class="fab fa-facebook navbar-social"></i>
+            </a></li>
+            <li><a href="#">
+              <i class="fab fa-pinterest navbar-social"></i>
+            </a></li>
+
+          {% endif %}
+        </ul>
+
+        
+
+      </div>
+    </div>
+  </div>
+
+
+
+    <!-- NAVBAR MOBILE -->
+
+
+
+    <div class="navbar-mobile">
+
+      <div class="user">
+        <p>Logged in as: <a href="#" style="color: tomato; font-size: 13px;">{{ request.user.username }}</a></p>
+      </div>
+
+      <div class="right search">
+        <form action="{% url 'blog:search-recipes' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" placeholder="Search Recipes" name="searched">
+          <button type="submit" class="search-btn">Search</button>
+        </form>
+      </div>
+
+      <ul>
+        {% if user.is_authenticated %}
+          <a href="{% url 'blog:main-view' %}"><li>Home</li></a>
+          <a href="{% url 'blog:myrecipes-view' %}"><li>My Recipes</li></a>
+          <a href="{% url 'blog:create-recipe' %}"><li>Create Recipe</li></a>
+          <a href="{% url 'blog:draft-view' %}"><li>Drafts</li></a>
+          <a class="categories-btn2" href="#"><li>Categories</li></a>
+          <!-- <a href="#"><li>About</li></a> -->
+          <a href="{% url 'accounts:profile-detail-view' request.user.profile.slug %}"><li>Profile</li></a>
+          <a href="{% url 'accounts:edit-profile' %}"><li>Edit Profile</li></a>
+          <a href="{% url 'accounts:logout-view' %}"><li>Logout</li></a>
+        {% else %}
+          <a href="{% url 'blog:main-view' %}"><li>Home</li></a>
+          <a class="categories-btn2" href="#"><li>Categories</li></a>
+          <!-- <a href="#"><li>About</li></a> -->
+          <a href="{% url 'blog:main-view' %}"><li>Login</li></a>
+
+          <div class="nav-mobile-socials">
+            <a href="#">
+            <i class="fab fa-instagram navbar-social"></i>
+            </a>
+
+            <a href="#">
+              <i class="fab fa-facebook navbar-social"></i>
+            </a>
+            
+            <a href="#">
+              <i class="fab fa-pinterest navbar-social"></i>
+            </a>
+
+        </div>
+
+        {% endif %}
+        
+      </ul>
+    </div>
+</header>
+  <!-- END NAV -->
+

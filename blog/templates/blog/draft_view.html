@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="main-page-header">
+  <div class="container">
+    <div id="register-page">
+      
+      
+
+      <div class="draft-page">
+        <h1>Drafts</h1>
+        <div class="search-table">
+          
+          {% if recipe_draft %}
+              <h3>Draft List ({{recipe_draft_count}})</h3> 
+          {% else %}
+            <h3>Draft List ({{searched_count}})</h3> 
+          {% endif %}
+            
+          
+          <div class="search">
+            <form method="POST">
+            {% csrf_token %}
+              <input type="text" placeholder="Search" name="searched-draft">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+        <div class="draft-table">
+          <table id="draft-table">
+
+            <tr class="header">
+              <th>Title</th>
+              <th>Photo</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          {% if recipe_draft %}
+            {% for recipe in recipe_draft %}
+            <tr>
+              <td>{{ recipe.title }}</td>
+              <td class="img-draft"><img src="{{ recipe.photo.url }}"></td>
+              <td>{{recipe.category}}</td>
+              <td>{{recipe.status}}</td>
+              <td><a href="{% url 'blog:edit-draft' recipe.slug %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'blog:delete-draft' recipe.slug %}"><i class="far fa-trash-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+          {% elif searched_recipe_draft %}
+            {% for recipe in searched_recipe_draft %}
+            <tr>
+              <td>{{ recipe.title }}</td>
+              <td class="img-draft"><img src="{{ recipe.photo.url }}"></td>
+              <td>{{recipe.category}}</td>
+              <td>{{recipe.status}}</td>
+              <td><a href="{% url 'blog:edit-draft' recipe.slug %}"><i class="far fa-edit"></i></a></td>
+              <td><a href="{% url 'blog:delete-draft' recipe.slug %}"><i class="far fa-trash-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+           {% else %}
+          <h3 style="background: #fff; padding: 3rem 5rem;">No Drafts</h3>
+          {% endif %}
+
+          </table>
+        </div>
+      </div>
+
+     
+        
+      
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+  
